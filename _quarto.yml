@@ -1,5 +1,6 @@
 project:
-  type: book
+   type: website
+   output-dir: docs
 
 book:
   title: "R과 통계분석, 4판"
@@ -16,6 +17,7 @@ format:
     toc-depth: 2
     number-sections: true
     number-depth: 3
+    theme: cosmo
 
 knitr:
   opts_chunk: 
