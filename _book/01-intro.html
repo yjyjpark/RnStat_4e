@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="박동련">
 
-<title>R과 통계분석, 4판</title>
+<title>R과 통계분석, 4판 - 1&nbsp; R 시작하기</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-intro.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -103,6 +102,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -115,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">머리말</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -142,13 +170,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">머리말</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span></a>
   </div>
 </li>
@@ -163,20 +191,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R과 통계분석, 4판</h1>
-<p class="subtitle lead">Tidyverse 활용</p>
+<h1 class="title"><span id="sec-R-start" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>박동련 </p>
-          </div>
-  </div>
     
   
     
@@ -187,51 +208,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="머리말" class="level1 unnumbered">
-<h1 class="unnumbered">머리말</h1>
-<p>R은 통계분석과 그래프 작성 및 통계적 프로그래밍에 적합한 매우 효과적인 분석 도구입니다. R은 잠시도 정체되어 있지 않고 끊임없이 진화하고 있으며, 놀라운 발전 속도를 항상 보여주고 있는데, 특히 패키지 <code>tidyverse</code>의 출현은 매우 주목할 사항입니다. 그것은 R의 모습이 <code>tidyverse</code> 이전과 이후로 완전히 구분된다고 할 수 있기 때문입니다. 데이터 다루기와 그래프 성능이 비교할 수 없을 만큼 향상되었고, 복잡한 분석 과정이 대폭 단순화되어 매우 효율적인 분석이 가능해졌습니다. 이러한 발전으로 인하여 R은 이제 data science를 위한 최적의 프로그래밍 언어로 자리매김을 확고하게 했다고 할 수 있습니다.</p>
-<p>이 책은 “R과 통계분석”, 4판의 연습문제에 대한 도움을 드리고, 출간 후 수정이 필요한 내용이나, 새롭게 추가되는 내용 등을 올리기 위해 작성됩니다. 끊임없이 진화하고 있는 R의 변화를 반영하기 위해 지속적으로 보완해갈 예정입니다..</p>
-<p>끝으로 이 책을 작성할 때의 R 세션 정보는 다음과 같습니다.</p>
+<section id="연습문제" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="연습문제"><span class="header-section-number">1.1</span> 연습문제</h2>
+<p><strong>1.</strong> 숫자형 벡터를 만들고, 벡터 연산을 실행해 보자.</p>
+<ol type="1">
+<li>다음의 자료를 벡터 <code>x</code>에 입력하라.</li>
+</ol>
+<p>&nbsp; &nbsp; &nbsp; 17 &nbsp; 16 &nbsp; 20 &nbsp; 24 &nbsp; 22 &nbsp; 15 &nbsp; 21</p>
+<ol start="2" type="1">
+<li>다음의 자료를 벡터 <code>y</code>에 입력하라.</li>
+</ol>
+<p>&nbsp; &nbsp; &nbsp; 10.4 &nbsp; 5.6 &nbsp; 3.1 &nbsp; 6.4 &nbsp; 9.6 &nbsp; 7.8 &nbsp; 12.1</p>
+<ol start="3" type="1">
+<li><p>두 벡터의 평균과 표준편차를 함수 <code>mean()</code>과 <code>sd()</code>를 사용해서 계산하라.</p></li>
+<li><p>두 벡터 <code>x</code>와 <code>y</code>의 더하기(<code>x</code>+<code>y</code>), 빼기(<code>x</code>-<code>y</code>), 곱하기(<code>x</code>*<code>y</code>), 나누기(<code>x</code>/<code>y</code>)를 실시하고, 그 결과 만들어진 벡터의 평균과 표준편차를 계산하라.</p></li>
+</ol>
+<p><strong>2.</strong> 다음의 숫자형 벡터를 만들어 보자.</p>
+<ol type="1">
+<li><p><code>-5</code> &nbsp; <code>-4</code> &nbsp; <code>-3</code> &nbsp; <span class="math inline">\(\ldots\)</span> &nbsp; <code>3</code> &nbsp; <code>4</code> &nbsp; <code>5</code></p></li>
+<li><p><code>5</code> &nbsp; <code>4</code> &nbsp; <code>3</code> &nbsp; <span class="math inline">\(\ldots\)</span> &nbsp; <code>-3</code> &nbsp; <code>-4</code> &nbsp; <code>-5</code></p></li>
+<li><p><code>1</code> &nbsp; <code>3</code> &nbsp; <code>5</code> &nbsp; <code>7</code> &nbsp; <code>9</code> &nbsp; <code>2</code> &nbsp; <code>4</code> &nbsp; <code>6</code> &nbsp; <code>8</code></p></li>
+<li><p><code>1</code> &nbsp; <code>2</code> &nbsp; <code>2</code> &nbsp; <code>3</code> &nbsp; <code>3</code> &nbsp; <code>3</code> &nbsp; <code>4</code> &nbsp; <code>4</code> &nbsp; <code>4</code> &nbsp; <code>4</code></p></li>
+<li><p><code>1</code> &nbsp; <code>2</code> &nbsp; <code>3</code> &nbsp; <code>1</code> &nbsp; <code>2</code> &nbsp; <code>3</code> &nbsp; <code>1</code> &nbsp; <code>2</code> &nbsp; <code>3</code></p></li>
+</ol>
+<p><strong>3.</strong> 다음의 문자형 벡터를 만들어 보자.</p>
+<ol type="1">
+<li><p><code>"a"</code> &nbsp; <code>"a"</code> &nbsp; <code>"b"</code> &nbsp; <code>"b"</code> &nbsp; <code>"b"</code></p></li>
+<li><p><code>"a1"</code> &nbsp; <code>"a2"</code> &nbsp; <code>"a3"</code> &nbsp; <code>"a4"</code> &nbsp; <code>"a5"</code></p></li>
+<li><p><code>"aa"</code> &nbsp; <code>"ba"</code> &nbsp; <code>"ca"</code> &nbsp; <code>"ab"</code> &nbsp; <code>"bb"</code> &nbsp; <code>"cb"</code> &nbsp; <code>"ac"</code> &nbsp; <code>"bc"</code> &nbsp; <code>"cc"</code></p></li>
+</ol>
+<p><strong>4.</strong> 벡터 <code>letters</code>는 영문 소문자로 이루어져 있는 문자형 벡터이다. 벡터 <code>letters</code>를 이용해서 다음의 벡터 <code>a1</code>을 만들어 보자.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sessionInfo</span>()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>R version <span class="dv">4</span>.<span class="fl">4.3</span> (<span class="dv">2025-02-28</span> ucrt)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Platform<span class="sc">:</span> x86_64<span class="sc">-</span>w64<span class="sc">-</span>mingw32<span class="sc">/</span>x64</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Running under<span class="sc">:</span> Windows <span class="dv">11</span> <span class="fu">x64</span> (build <span class="dv">26100</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Matrix products<span class="sc">:</span> default</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>locale<span class="sc">:</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] LC_COLLATE<span class="ot">=</span>Korean_Korea.utf8  LC_CTYPE<span class="ot">=</span>Korean_Korea.utf8   </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] LC_MONETARY<span class="ot">=</span>Korean_Korea.utf8 LC_NUMERIC<span class="ot">=</span>C                 </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>] LC_TIME<span class="ot">=</span>Korean_Korea.utf8    </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>time zone<span class="sc">:</span> Asia<span class="sc">/</span>Seoul</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>tzcode source<span class="sc">:</span> internal</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>attached base packages<span class="sc">:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] stats     graphics  grDevices utils     datasets  methods  </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>[<span class="dv">7</span>] base     </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>other attached packages<span class="sc">:</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] lubridate_1.<span class="fl">9.4</span> forcats_1.<span class="fl">0.0</span>   stringr_1.<span class="fl">5.1</span>   dplyr_1.<span class="fl">1.4</span>    </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] purrr_1.<span class="fl">0.4</span>     readr_2.<span class="fl">1.5</span>     tidyr_1.<span class="fl">3.1</span>     tibble_3.<span class="fl">2.1</span>   </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] ggplot2_3.<span class="fl">5.1</span>   tidyverse_2.<span class="fl">0.0</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>loaded via a <span class="fu">namespace</span> (and not attached)<span class="sc">:</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] gtable_0.<span class="fl">3.6</span>      jsonlite_1.<span class="fl">9.1</span>    compiler_4.<span class="fl">4.3</span>   </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a> [<span class="dv">4</span>] tidyselect_1.<span class="fl">2.1</span>  scales_1.<span class="fl">3.0</span>      yaml_2.<span class="fl">3.10</span>      </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] fastmap_1.<span class="fl">2.0</span>     R6_2.<span class="fl">6.1</span>          generics_0.<span class="fl">1.3</span>   </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] knitr_1<span class="fl">.50</span>        htmlwidgets_1.<span class="fl">6.4</span> munsell_0.<span class="fl">5.1</span>    </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] pillar_1.<span class="fl">10.1</span>     tzdb_0.<span class="fl">5.0</span>        rlang_1.<span class="fl">1.5</span>      </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">16</span>] stringi_1.<span class="fl">8.4</span>     xfun_0<span class="fl">.51</span>         timechange_0.<span class="fl">3.0</span> </span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] cli_3.<span class="fl">6.4</span>         withr_3.<span class="fl">0.2</span>       magrittr_2.<span class="fl">0.3</span>   </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>[<span class="dv">22</span>] digest_0.<span class="fl">6.37</span>     grid_4.<span class="fl">4.3</span>        rstudioapi_0.<span class="fl">17.1</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] hms_1.<span class="fl">1.3</span>         lifecycle_1.<span class="fl">0.4</span>   vctrs_0.<span class="fl">6.5</span>      </span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>[<span class="dv">28</span>] evaluate_1.<span class="fl">0.3</span>    glue_1.<span class="fl">8.0</span>        colorspace_2<span class="fl">.1</span><span class="dv">-1</span> </span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>] rmarkdown_2<span class="fl">.29</span>    tools_4.<span class="fl">4.3</span>       pkgconfig_2.<span class="fl">0.3</span>  </span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>[<span class="dv">34</span>] htmltools_0.<span class="dv">5</span>.<span class="fl">8.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a1</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"a 1"</span>  <span class="st">"b 2"</span>  <span class="st">"c 3"</span>  <span class="st">"d 4"</span>  <span class="st">"e 5"</span>  <span class="st">"f 6"</span>  <span class="st">"g 7"</span>  <span class="st">"h 8"</span>  <span class="st">"i 9"</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="st">"j 10"</span> <span class="st">"k 11"</span> <span class="st">"l 12"</span> <span class="st">"m 13"</span> <span class="st">"n 14"</span> <span class="st">"o 15"</span> <span class="st">"p 16"</span> <span class="st">"q 17"</span> <span class="st">"r 18"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="st">"s 19"</span> <span class="st">"t 20"</span> <span class="st">"u 21"</span> <span class="st">"v 22"</span> <span class="st">"w 23"</span> <span class="st">"x 24"</span> <span class="st">"y 25"</span> <span class="st">"z 26"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>5.</strong> 벡터 <code>a1</code>은 영문자와 숫자 사이에 빈칸이 있다. 다음과 같이 영문자와 숫자 사이에 빈칸이 없는 벡터 <code>a2</code>를 벡터 <code>letters</code>를 이용해서 만들어 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> a2</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"a1"</span>  <span class="st">"b2"</span>  <span class="st">"c3"</span>  <span class="st">"d4"</span>  <span class="st">"e5"</span>  <span class="st">"f6"</span>  <span class="st">"g7"</span>  <span class="st">"h8"</span>  <span class="st">"i9"</span>  <span class="st">"j10"</span> <span class="st">"k11"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">12</span>] <span class="st">"l12"</span> <span class="st">"m13"</span> <span class="st">"n14"</span> <span class="st">"o15"</span> <span class="st">"p16"</span> <span class="st">"q17"</span> <span class="st">"r18"</span> <span class="st">"s19"</span> <span class="st">"t20"</span> <span class="st">"u21"</span> <span class="st">"v22"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">23</span>] <span class="st">"w23"</span> <span class="st">"x24"</span> <span class="st">"y25"</span> <span class="st">"z26"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>6.</strong> R을 실행하게 되면 많은 수의 객체들이 만들어진다.</p>
+<ol type="1">
+<li><p>작업공간이란 무엇을 의미하는 것이며, 세션이 진행 중에는 어디에 임시로 저장되어 있는가?</p></li>
+<li><p>작업공간을 저장하면 만들어지는 파일은 무엇이며, 어디에 저장되는가?</p></li>
+<li><p>작업공간을 저장하는 것이 좋지 않다고 하는 이유는 무엇인가?</p></li>
+<li><p>작업 종류별로 자료 및 프로그램 등을 분리해서 저장하고자 할 때 가장 좋은 방식은 무엇인지 구체적으로 설명하라.</p></li>
+</ol>
+<p><strong>7.</strong> 패키지는 사용자가 작성한 함수 및 자료들을 모아 놓은 것을 말한다.</p>
+<ol type="1">
+<li><p>패키지는 세 가지 종류로 구분해서 볼 수 있는데, 이것들의 특성 및 차이점을 설명하라.</p></li>
+<li><p>패키지 <code>tidyverse</code>를 설치해 보자. 패키지 <code>tidyverse</code>는 1)번에서 구분한 세 가지 패키지의 종류 중 어떤 것에 해당하는가?</p></li>
+<li><p>특정 패키지로 R로 불러올 때 사용하는 함수는 무엇이며, 그 함수를 <code>tidyverse</code>에 적용하면 어떤 패키지를 불러올 수 있는가?</p></li>
+</ol>
 <div style="page-break-after: always;"></div>
 
 
@@ -627,11 +659,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link  aria-label=" 머리말"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">머리말</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-intro.html" class="pagination-link" aria-label="<span class='chapter-number'>1</span>&nbsp; <span class='chapter-title'>R 시작하기</span>">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

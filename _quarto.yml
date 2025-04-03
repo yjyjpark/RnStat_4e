@@ -8,8 +8,8 @@ book:
 #  date: "r format(Sys.Date(), "%Y년 %m월 %d일")"
   chapters:
     - index.qmd
+    - 01-intro.qmd
     
-
 format:
   html:
     toc: false
