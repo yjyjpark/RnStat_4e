@@ -1,0 +1,40 @@
+project:
+  type: book
+
+book:
+  title: "R과 통계분석, 4판"
+  subtitle: "Tidyverse 활용"
+  author: "박동련"
+#  date: "r format(Sys.Date(), "%Y년 %m월 %d일")"
+  chapters:
+    - index.qmd
+    
+
+format:
+  html:
+    toc: false
+    toc-depth: 2
+    number-sections: true
+    number-depth: 3
+
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "" 
+    prompt: true
+    fig.width: 4
+    fig.height: 2.5
+    R.options:
+      width: 70
+execute: 
+  message: false
+  warning: false
+  
+
+crossref: 
+#  chapters: true
+  fig-title: "그림 "
+  fig-prefix: ""
+  tbl-title: "표 "
+  tbl-prefix: ""
+  sec-prefix: ""

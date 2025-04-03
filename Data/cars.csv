@@ -1,0 +1,234 @@
+audi,a4,4,auto,29
+audi,a4,4,manual,29
+audi,a4,4,manual,31
+audi,a4,4,auto,30
+audi,a4,6,auto,26
+audi,a4,6,manual,26
+audi,a4,6,auto,27
+audi,a4 quattro,4,manual,26
+audi,a4 quattro,4,auto,25
+audi,a4 quattro,4,manual,28
+audi,a4 quattro,4,auto,27
+audi,a4 quattro,6,auto,25
+audi,a4 quattro,6,manual,25
+audi,a4 quattro,6,auto,25
+audi,a4 quattro,6,manual,25
+audi,a6 quattro,6,auto,24
+audi,a6 quattro,6,auto,25
+audi,a6 quattro,8,auto,23
+chevrolet,c1500 suburban 2wd,8,auto,20
+chevrolet,c1500 suburban 2wd,8,auto,15
+chevrolet,c1500 suburban 2wd,8,auto,20
+chevrolet,c1500 suburban 2wd,8,auto,17
+chevrolet,c1500 suburban 2wd,8,auto,17
+chevrolet,corvette,8,manual,26
+chevrolet,corvette,8,auto,23
+chevrolet,corvette,8,manual,26
+chevrolet,corvette,8,auto,25
+chevrolet,corvette,8,manual,24
+chevrolet,k1500 tahoe 4wd,8,auto,19
+chevrolet,k1500 tahoe 4wd,8,auto,14
+chevrolet,k1500 tahoe 4wd,8,auto,15
+chevrolet,k1500 tahoe 4wd,8,auto,17
+chevrolet,malibu,4,auto,27
+chevrolet,malibu,4,auto,30
+chevrolet,malibu,6,auto,26
+chevrolet,malibu,6,auto,29
+chevrolet,malibu,6,auto,26
+dodge,caravan 2wd,4,auto,24
+dodge,caravan 2wd,6,auto,24
+dodge,caravan 2wd,6,auto,22
+dodge,caravan 2wd,6,auto,22
+dodge,caravan 2wd,6,auto,24
+dodge,caravan 2wd,6,auto,24
+dodge,caravan 2wd,6,auto,17
+dodge,caravan 2wd,6,auto,22
+dodge,caravan 2wd,6,auto,21
+dodge,caravan 2wd,6,auto,23
+dodge,caravan 2wd,6,auto,23
+dodge,dakota pickup 4wd,6,manual,19
+dodge,dakota pickup 4wd,6,auto,18
+dodge,dakota pickup 4wd,6,auto,17
+dodge,dakota pickup 4wd,6,manual,17
+dodge,dakota pickup 4wd,8,auto,19
+dodge,dakota pickup 4wd,8,auto,19
+dodge,dakota pickup 4wd,8,auto,12
+dodge,dakota pickup 4wd,8,manual,17
+dodge,dakota pickup 4wd,8,auto,15
+dodge,durango 4wd,6,auto,17
+dodge,durango 4wd,8,auto,17
+dodge,durango 4wd,8,auto,12
+dodge,durango 4wd,8,auto,17
+dodge,durango 4wd,8,auto,16
+dodge,durango 4wd,8,auto,18
+dodge,durango 4wd,8,auto,15
+dodge,ram 1500 pickup 4wd,8,manual,16
+dodge,ram 1500 pickup 4wd,8,auto,12
+dodge,ram 1500 pickup 4wd,8,auto,17
+dodge,ram 1500 pickup 4wd,8,auto,17
+dodge,ram 1500 pickup 4wd,8,manual,16
+dodge,ram 1500 pickup 4wd,8,manual,12
+dodge,ram 1500 pickup 4wd,8,auto,15
+dodge,ram 1500 pickup 4wd,8,manual,16
+dodge,ram 1500 pickup 4wd,8,auto,17
+dodge,ram 1500 pickup 4wd,8,auto,15
+ford,expedition 2wd,8,auto,17
+ford,expedition 2wd,8,auto,17
+ford,expedition 2wd,8,auto,18
+ford,explorer 4wd,6,auto,17
+ford,explorer 4wd,6,manual,19
+ford,explorer 4wd,6,auto,17
+ford,explorer 4wd,6,auto,19
+ford,explorer 4wd,8,auto,19
+ford,explorer 4wd,8,auto,17
+ford,f150 pickup 4wd,6,auto,17
+ford,f150 pickup 4wd,6,manual,17
+ford,f150 pickup 4wd,8,manual,16
+ford,f150 pickup 4wd,8,auto,16
+ford,f150 pickup 4wd,8,auto,17
+ford,f150 pickup 4wd,8,auto,15
+ford,f150 pickup 4wd,8,auto,17
+ford,mustang,6,manual,26
+ford,mustang,6,auto,25
+ford,mustang,6,manual,26
+ford,mustang,6,auto,24
+ford,mustang,8,auto,21
+ford,mustang,8,manual,22
+ford,mustang,8,manual,23
+ford,mustang,8,auto,22
+ford,mustang,8,manual,20
+honda,civic,4,manual,33
+honda,civic,4,auto,32
+honda,civic,4,manual,32
+honda,civic,4,manual,29
+honda,civic,4,auto,32
+honda,civic,4,manual,34
+honda,civic,4,auto,36
+honda,civic,4,auto,36
+honda,civic,4,manual,29
+hyundai,sonata,4,auto,26
+hyundai,sonata,4,manual,27
+hyundai,sonata,4,auto,30
+hyundai,sonata,4,manual,31
+hyundai,sonata,6,auto,26
+hyundai,sonata,6,manual,26
+hyundai,sonata,6,auto,28
+hyundai,tiburon,4,auto,26
+hyundai,tiburon,4,manual,29
+hyundai,tiburon,4,manual,28
+hyundai,tiburon,4,auto,27
+hyundai,tiburon,6,auto,24
+hyundai,tiburon,6,manual,24
+hyundai,tiburon,6,manual,24
+jeep,grand cherokee 4wd,6,auto,22
+jeep,grand cherokee 4wd,6,auto,19
+jeep,grand cherokee 4wd,6,auto,20
+jeep,grand cherokee 4wd,8,auto,17
+jeep,grand cherokee 4wd,8,auto,12
+jeep,grand cherokee 4wd,8,auto,19
+jeep,grand cherokee 4wd,8,auto,18
+jeep,grand cherokee 4wd,8,auto,14
+land rover,range rover,8,auto,15
+land rover,range rover,8,auto,18
+land rover,range rover,8,auto,18
+land rover,range rover,8,auto,15
+lincoln,navigator 2wd,8,auto,17
+lincoln,navigator 2wd,8,auto,16
+lincoln,navigator 2wd,8,auto,18
+mercury,mountaineer 4wd,6,auto,17
+mercury,mountaineer 4wd,6,auto,19
+mercury,mountaineer 4wd,8,auto,19
+mercury,mountaineer 4wd,8,auto,17
+nissan,altima,4,manual,29
+nissan,altima,4,auto,27
+nissan,altima,4,auto,31
+nissan,altima,4,manual,32
+nissan,altima,6,manual,27
+nissan,altima,6,auto,26
+nissan,maxima,6,auto,26
+nissan,maxima,6,manual,25
+nissan,maxima,6,auto,25
+nissan,pathfinder 4wd,6,auto,17
+nissan,pathfinder 4wd,6,manual,17
+nissan,pathfinder 4wd,6,auto,20
+nissan,pathfinder 4wd,8,auto,18
+pontiac,grand prix,6,auto,26
+pontiac,grand prix,6,auto,26
+pontiac,grand prix,6,auto,27
+pontiac,grand prix,6,auto,28
+pontiac,grand prix,8,auto,25
+subaru,forester awd,4,manual,25
+subaru,forester awd,4,auto,24
+subaru,forester awd,4,manual,27
+subaru,forester awd,4,manual,25
+subaru,forester awd,4,auto,26
+subaru,forester awd,4,auto,23
+subaru,impreza awd,4,auto,26
+subaru,impreza awd,4,manual,26
+subaru,impreza awd,4,manual,26
+subaru,impreza awd,4,auto,26
+subaru,impreza awd,4,auto,25
+subaru,impreza awd,4,auto,27
+subaru,impreza awd,4,manual,25
+subaru,impreza awd,4,manual,27
+toyota,4runner 4wd,4,manual,20
+toyota,4runner 4wd,4,auto,20
+toyota,4runner 4wd,6,auto,19
+toyota,4runner 4wd,6,manual,17
+toyota,4runner 4wd,6,auto,20
+toyota,4runner 4wd,8,auto,17
+toyota,camry,4,manual,29
+toyota,camry,4,auto,27
+toyota,camry,4,manual,31
+toyota,camry,4,auto,31
+toyota,camry,6,auto,26
+toyota,camry,6,manual,26
+toyota,camry,6,auto,28
+toyota,camry solara,4,auto,27
+toyota,camry solara,4,manual,29
+toyota,camry solara,4,manual,31
+toyota,camry solara,4,auto,31
+toyota,camry solara,6,auto,26
+toyota,camry solara,6,manual,26
+toyota,camry solara,6,auto,27
+toyota,corolla,4,auto,30
+toyota,corolla,4,auto,33
+toyota,corolla,4,manual,35
+toyota,corolla,4,manual,37
+toyota,corolla,4,auto,35
+toyota,land cruiser wagon 4wd,8,auto,15
+toyota,land cruiser wagon 4wd,8,auto,18
+toyota,toyota tacoma 4wd,4,manual,20
+toyota,toyota tacoma 4wd,4,auto,20
+toyota,toyota tacoma 4wd,4,manual,22
+toyota,toyota tacoma 4wd,6,manual,17
+toyota,toyota tacoma 4wd,6,auto,19
+toyota,toyota tacoma 4wd,6,manual,18
+toyota,toyota tacoma 4wd,6,auto,20
+volkswagen,gti,4,manual,29
+volkswagen,gti,4,auto,26
+volkswagen,gti,4,manual,29
+volkswagen,gti,4,auto,29
+volkswagen,gti,6,manual,24
+volkswagen,jetta,4,manual,44
+volkswagen,jetta,4,manual,29
+volkswagen,jetta,4,auto,26
+volkswagen,jetta,4,auto,29
+volkswagen,jetta,4,manual,29
+volkswagen,jetta,5,auto,29
+volkswagen,jetta,5,manual,29
+volkswagen,jetta,6,auto,23
+volkswagen,jetta,6,manual,24
+volkswagen,new beetle,4,manual,44
+volkswagen,new beetle,4,auto,41
+volkswagen,new beetle,4,manual,29
+volkswagen,new beetle,4,auto,26
+volkswagen,new beetle,5,manual,28
+volkswagen,new beetle,5,auto,29
+volkswagen,passat,4,manual,29
+volkswagen,passat,4,auto,29
+volkswagen,passat,4,auto,28
+volkswagen,passat,4,manual,29
+volkswagen,passat,6,auto,26
+volkswagen,passat,6,manual,26
+volkswagen,passat,6,auto,26
