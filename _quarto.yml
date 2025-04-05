@@ -6,7 +6,7 @@ book:
   title: "R과 통계분석, 4판"
   subtitle: "Tidyverse 활용"
   author: "박동련"
-#  date: "r format(Sys.Date(), "%Y년 %m월 %d일")"
+  date: last-modified
   chapters:
     - index.qmd
     - 01-intro.qmd
@@ -26,8 +26,7 @@ knitr:
     prompt: true
     fig.width: 4
     fig.height: 2.5
-    R.options:
-      width: 70
+   
 execute: 
   message: false
   warning: false
