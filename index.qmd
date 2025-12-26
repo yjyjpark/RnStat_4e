@@ -18,6 +18,7 @@ library(tidyverse)
 
 
 ```{r}
+#| code-fold: false
 sessionInfo()
 ```
 

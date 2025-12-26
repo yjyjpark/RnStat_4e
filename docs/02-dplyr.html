@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R과 통계분석, 4판 - 2&nbsp; 데이터 프레임 다루기</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./01-intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-dplyr.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">데이터 프레임 다루기</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R과 통계분석, 4판</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">머리말</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-dplyr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">데이터 프레임 다루기</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#sec-dataframe" id="toc-sec-dataframe" class="nav-link active" data-scroll-target="#sec-dataframe"><span class="header-section-number">2.1</span> 데이터 프레임</a></li>
+  <li><a href="#sec-dplyr" id="toc-sec-dplyr" class="nav-link" data-scroll-target="#sec-dplyr"><span class="header-section-number">2.2</span> 패키지 dplyr에 의한 데이터 프레임 다루기</a></li>
+  <li><a href="#연습문제" id="toc-연습문제" class="nav-link" data-scroll-target="#연습문제"><span class="header-section-number">2.3</span> 연습문제</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-data-frame-handling" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">데이터 프레임 다루기</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-dataframe" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-dataframe"><span class="header-section-number">2.1</span> 데이터 프레임</h2>
+</section>
+<section id="sec-dplyr" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-dplyr"><span class="header-section-number">2.2</span> 패키지 dplyr에 의한 데이터 프레임 다루기</h2>
+</section>
+<section id="연습문제" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="연습문제"><span class="header-section-number">2.3</span> 연습문제</h2>
+<p><strong>3.</strong> 데이터 프레임 <code>iris</code>는 세 가지 붓꽃 <code>setosa</code>, <code>versicolor</code>, <code>virginica</code>의 꽃잎과 꽃받침의 길이와 폭을 측정한 자료이다.</p>
+<p>1)&nbsp;변수 <code>Species</code>가 <code>setosa</code>인 붓꽃만 선택해서 변수 <code>Petal.Length</code>의 오름차순으로 재배열하라. 변수 <code>Petal.Length</code>의 값이 같은 경우에는 변수 <code>Petal.Width</code>의 값이 큰 자료부터 배열하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span>   iris <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">arrange</span>(Petal.Length, <span class="fu">desc</span>(Petal.Width))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>           <span class="fl">4.6</span>         <span class="fl">3.6</span>          <span class="fl">1.0</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>           <span class="fl">4.3</span>         <span class="fl">3.0</span>          <span class="fl">1.1</span>         <span class="fl">0.1</span>  setosa</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>           <span class="fl">5.8</span>         <span class="fl">4.0</span>          <span class="fl">1.2</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>           <span class="fl">5.0</span>         <span class="fl">3.2</span>          <span class="fl">1.2</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>           <span class="fl">5.4</span>         <span class="fl">3.9</span>          <span class="fl">1.3</span>         <span class="fl">0.4</span>  setosa</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>           <span class="fl">5.0</span>         <span class="fl">3.5</span>          <span class="fl">1.3</span>         <span class="fl">0.3</span>  setosa</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>           <span class="fl">4.5</span>         <span class="fl">2.3</span>          <span class="fl">1.3</span>         <span class="fl">0.3</span>  setosa</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span>           <span class="fl">4.7</span>         <span class="fl">3.2</span>          <span class="fl">1.3</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span>           <span class="fl">5.5</span>         <span class="fl">3.5</span>          <span class="fl">1.3</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span>          <span class="fl">4.4</span>         <span class="fl">3.0</span>          <span class="fl">1.3</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span>          <span class="fl">4.4</span>         <span class="fl">3.2</span>          <span class="fl">1.3</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span>          <span class="fl">4.6</span>         <span class="fl">3.4</span>          <span class="fl">1.4</span>         <span class="fl">0.3</span>  setosa</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span>          <span class="fl">5.1</span>         <span class="fl">3.5</span>          <span class="fl">1.4</span>         <span class="fl">0.3</span>  setosa</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span>          <span class="fl">4.8</span>         <span class="fl">3.0</span>          <span class="fl">1.4</span>         <span class="fl">0.3</span>  setosa</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span>          <span class="fl">5.1</span>         <span class="fl">3.5</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span>          <span class="fl">4.9</span>         <span class="fl">3.0</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span>          <span class="fl">5.0</span>         <span class="fl">3.6</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span>          <span class="fl">4.4</span>         <span class="fl">2.9</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="dv">19</span>          <span class="fl">5.2</span>         <span class="fl">3.4</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span>          <span class="fl">5.5</span>         <span class="fl">4.2</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="dv">21</span>          <span class="fl">4.6</span>         <span class="fl">3.2</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="dv">22</span>          <span class="fl">5.0</span>         <span class="fl">3.3</span>          <span class="fl">1.4</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="dv">23</span>          <span class="fl">4.8</span>         <span class="fl">3.0</span>          <span class="fl">1.4</span>         <span class="fl">0.1</span>  setosa</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span>          <span class="fl">4.9</span>         <span class="fl">3.6</span>          <span class="fl">1.4</span>         <span class="fl">0.1</span>  setosa</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="dv">25</span>          <span class="fl">5.7</span>         <span class="fl">4.4</span>          <span class="fl">1.5</span>         <span class="fl">0.4</span>  setosa</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="dv">26</span>          <span class="fl">5.1</span>         <span class="fl">3.7</span>          <span class="fl">1.5</span>         <span class="fl">0.4</span>  setosa</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="dv">27</span>          <span class="fl">5.4</span>         <span class="fl">3.4</span>          <span class="fl">1.5</span>         <span class="fl">0.4</span>  setosa</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="dv">28</span>          <span class="fl">5.1</span>         <span class="fl">3.8</span>          <span class="fl">1.5</span>         <span class="fl">0.3</span>  setosa</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="dv">29</span>          <span class="fl">4.6</span>         <span class="fl">3.1</span>          <span class="fl">1.5</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="dv">30</span>          <span class="fl">5.0</span>         <span class="fl">3.4</span>          <span class="fl">1.5</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="dv">31</span>          <span class="fl">5.4</span>         <span class="fl">3.7</span>          <span class="fl">1.5</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="dv">32</span>          <span class="fl">5.2</span>         <span class="fl">3.5</span>          <span class="fl">1.5</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="dv">33</span>          <span class="fl">4.9</span>         <span class="fl">3.1</span>          <span class="fl">1.5</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="dv">34</span>          <span class="fl">5.1</span>         <span class="fl">3.4</span>          <span class="fl">1.5</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="dv">35</span>          <span class="fl">5.3</span>         <span class="fl">3.7</span>          <span class="fl">1.5</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="dv">36</span>          <span class="fl">4.9</span>         <span class="fl">3.1</span>          <span class="fl">1.5</span>         <span class="fl">0.1</span>  setosa</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="dv">37</span>          <span class="fl">5.2</span>         <span class="fl">4.1</span>          <span class="fl">1.5</span>         <span class="fl">0.1</span>  setosa</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="dv">38</span>          <span class="fl">5.0</span>         <span class="fl">3.5</span>          <span class="fl">1.6</span>         <span class="fl">0.6</span>  setosa</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="dv">39</span>          <span class="fl">5.0</span>         <span class="fl">3.4</span>          <span class="fl">1.6</span>         <span class="fl">0.4</span>  setosa</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span>          <span class="fl">4.8</span>         <span class="fl">3.4</span>          <span class="fl">1.6</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="dv">41</span>          <span class="fl">5.0</span>         <span class="fl">3.0</span>          <span class="fl">1.6</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span>          <span class="fl">4.7</span>         <span class="fl">3.2</span>          <span class="fl">1.6</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="dv">43</span>          <span class="fl">4.8</span>         <span class="fl">3.1</span>          <span class="fl">1.6</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="dv">44</span>          <span class="fl">5.1</span>         <span class="fl">3.8</span>          <span class="fl">1.6</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="dv">45</span>          <span class="fl">5.1</span>         <span class="fl">3.3</span>          <span class="fl">1.7</span>         <span class="fl">0.5</span>  setosa</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="dv">46</span>          <span class="fl">5.4</span>         <span class="fl">3.9</span>          <span class="fl">1.7</span>         <span class="fl">0.4</span>  setosa</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="dv">47</span>          <span class="fl">5.7</span>         <span class="fl">3.8</span>          <span class="fl">1.7</span>         <span class="fl">0.3</span>  setosa</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="dv">48</span>          <span class="fl">5.4</span>         <span class="fl">3.4</span>          <span class="fl">1.7</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="dv">49</span>          <span class="fl">5.1</span>         <span class="fl">3.8</span>          <span class="fl">1.9</span>         <span class="fl">0.4</span>  setosa</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span>          <span class="fl">4.8</span>         <span class="fl">3.4</span>          <span class="fl">1.9</span>         <span class="fl">0.2</span>  setosa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>2)&nbsp;붓꽃 <code>setosa</code> 중에 변수 <code>Petal.Length</code>가 1 이하고, <code>Petal.Width</code>가 0.5 이하인 붓꽃이 몇 송이가 되는지 확인해 보자.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> iris <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Petal.Length <span class="sc">&lt;=</span> <span class="dv">1</span> <span class="sc">&amp;</span> Petal.Width <span class="sc">&lt;=</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">nrow</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>3)&nbsp;변수 <code>Species</code>가 <code>setosa</code>인 붓꽃 중에 변수 <code>Petal.Length</code>의 값이 가장 큰 붓꽃 자료를 출력해 보자.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> iris <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">slice_max</span>(Petal.Length)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>          <span class="fl">4.8</span>         <span class="fl">3.4</span>          <span class="fl">1.9</span>         <span class="fl">0.2</span>  setosa</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>          <span class="fl">5.1</span>         <span class="fl">3.8</span>          <span class="fl">1.9</span>         <span class="fl">0.4</span>  setosa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>4)&nbsp;붓꽃 <code>versicolor</code>와 <code>virginica</code> 중에 <code>Petal.Length</code>와 <code>Petal.Width</code>의 합이 가장 큰 붓꽃 자료를 출력해 보자.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> iris <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"versicolor"</span>, <span class="st">"virginica"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">slice_max</span>(Petal.Length <span class="sc">+</span> Petal.Width)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  Sepal.Length Sepal.Width Petal.Length Petal.Width   Species</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>          <span class="fl">7.7</span>         <span class="fl">2.6</span>          <span class="fl">6.9</span>         <span class="fl">2.3</span> virginica</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>5)&nbsp;붓꽃 <code>setosa</code> 중에 <code>Petal.Length</code>와 <code>Petal.Width</code>의 합이 가장 작은 붓꽃 자료를 출력해 보자.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> iris <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">slice_min</span>(Petal.Length <span class="sc">+</span> Petal.Width)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>          <span class="fl">4.6</span>         <span class="fl">3.6</span>            <span class="dv">1</span>         <span class="fl">0.2</span>  setosa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>5.</strong> 패키지 <code>MASS</code>의 데이터 프레임 <code>Cars93</code>는 1993년 미국에서 판매된 93종류 자동차에 대한 자료가 입력되어 있는 전통적 데이터 프레임이다.</p>
+<p>1)&nbsp; <code>Cars93</code>의 모든 변수의 처음 3행 자료를 <code>tibble</code>의 형식으로 출력하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">data</span>(Cars93, <span class="at">package =</span> <span class="st">"MASS"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as_tibble</span>(Cars93) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">width =</span> <span class="cn">Inf</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 93 × 27</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  Manufacturer Model   Type    Min.Price Price Max.Price MPG.city MPG.highway</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>        <span class="er">&lt;</span>fct<span class="sc">&gt;</span>   <span class="er">&lt;</span>fct<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>int<span class="sc">&gt;</span>       <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Acura        Integra Small        <span class="fl">12.9</span>  <span class="fl">15.9</span>      <span class="fl">18.8</span>       <span class="dv">25</span>          <span class="dv">31</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Acura        Legend  Midsize      <span class="fl">29.2</span>  <span class="fl">33.9</span>      <span class="fl">38.7</span>       <span class="dv">18</span>          <span class="dv">25</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Audi         <span class="dv">90</span>      Compact      <span class="fl">25.9</span>  <span class="fl">29.1</span>      <span class="fl">32.3</span>       <span class="dv">20</span>          <span class="dv">26</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  AirBags            DriveTrain Cylinders EngineSize Horsepower   RPM</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>              <span class="er">&lt;</span>fct<span class="sc">&gt;</span>      <span class="er">&lt;</span>fct<span class="sc">&gt;</span>          <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>      <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> None               Front      <span class="dv">4</span>                <span class="fl">1.8</span>        <span class="dv">140</span>  <span class="dv">6300</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Driver <span class="sc">&amp;</span> Passenger Front      <span class="dv">6</span>                <span class="fl">3.2</span>        <span class="dv">200</span>  <span class="dv">5500</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Driver only        Front      <span class="dv">6</span>                <span class="fl">2.8</span>        <span class="dv">172</span>  <span class="dv">5500</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  Rev.per.mile Man.trans.avail Fuel.tank.capacity Passengers Length Wheelbase</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>         <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span>                        <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>      <span class="er">&lt;</span>int<span class="sc">&gt;</span>  <span class="er">&lt;</span>int<span class="sc">&gt;</span>     <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>         <span class="dv">2890</span> Yes                           <span class="fl">13.2</span>          <span class="dv">5</span>    <span class="dv">177</span>       <span class="dv">102</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>         <span class="dv">2335</span> Yes                           <span class="dv">18</span>            <span class="dv">5</span>    <span class="dv">195</span>       <span class="dv">115</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>         <span class="dv">2280</span> Yes                           <span class="fl">16.9</span>          <span class="dv">5</span>    <span class="dv">180</span>       <span class="dv">102</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  Width Turn.circle Rear.seat.room Luggage.room Weight Origin  Make         </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span>       <span class="er">&lt;</span>int<span class="sc">&gt;</span>          <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>        <span class="er">&lt;</span>int<span class="sc">&gt;</span>  <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span>   <span class="er">&lt;</span>fct<span class="sc">&gt;</span>        </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>    <span class="dv">68</span>          <span class="dv">37</span>           <span class="fl">26.5</span>           <span class="dv">11</span>   <span class="dv">2705</span> non<span class="sc">-</span>USA Acura Integra</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>    <span class="dv">71</span>          <span class="dv">38</span>           <span class="dv">30</span>             <span class="dv">15</span>   <span class="dv">3560</span> non<span class="sc">-</span>USA Acura Legend </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>    <span class="dv">67</span>          <span class="dv">37</span>           <span class="dv">28</span>             <span class="dv">14</span>   <span class="dv">3375</span> non<span class="sc">-</span>USA Audi <span class="dv">90</span>      </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># ℹ 90 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>2)&nbsp; 변수 <code>Manufacturer</code>, <code>Model</code>, <code>Cylinders</code>, <code>Man.trans.avail</code>, <code>MPG.highway</code>, <code>EngineSize</code>를 선택해서 데이터 프레임 <code>cars_93</code>에 입력하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="ot">&lt;-</span> Cars93 <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(Manufacturer, Model, Cylinders, Man.trans.avail, MPG.highway, EngineSize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>3)&nbsp; 데이터 프레임 <code>cars_93</code>에서 변수 <code>Manufacturer</code>과 <code>Model</code>을 결합해서 <code>maker</code>를 생성하고, 첫 번째 변수로 위치를 이동하라. 변수 <code>Manufacturer</code>과 <code>Model</code>은 <code>cars_93</code>에서 삭제한다.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="ot">&lt;-</span> cars_93 <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">maker =</span> <span class="fu">paste</span>(Manufacturer, Model), <span class="at">.before =</span> Manufacturer) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(Manufacturer, Model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>4)&nbsp; <code>cars_93</code>의 변수 중 <code>Cylinders</code>는 <code>cyl</code>로, <code>Man.trans.avail</code>은 <code>trans</code>로, <code>MPG.highway</code>는 <code>hwy</code>로, <code>EngineSize</code>는 <code>displ</code>로 각각 이름을 변경하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="ot">&lt;-</span> cars_93 <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">rename</span>(<span class="at">cyl =</span> Cylinders, <span class="at">trans =</span> Man.trans.avail, <span class="at">hwy =</span> MPG.highway, <span class="at">displ =</span> EngineSize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>5)&nbsp; <code>cars_93</code>에서 숫자형 변수만을 선택해서 처음 5개 행을 출력하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  hwy displ</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  <span class="dv">31</span>   <span class="fl">1.8</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>  <span class="dv">25</span>   <span class="fl">3.2</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>  <span class="dv">26</span>   <span class="fl">2.8</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>  <span class="dv">26</span>   <span class="fl">2.8</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>  <span class="dv">30</span>   <span class="fl">3.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>6)&nbsp; <code>cars_93</code>에서 변수 <code>cyl</code>로 구분되는 그룹별로 해당되는 자동차의 대수를 구하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">count</span>(cyl)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>     cyl  n</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>      <span class="dv">3</span>  <span class="dv">3</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>      <span class="dv">4</span> <span class="dv">49</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>      <span class="dv">5</span>  <span class="dv">2</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>      <span class="dv">6</span> <span class="dv">31</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>      <span class="dv">8</span>  <span class="dv">7</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> rotary  <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>7)&nbsp; 변수 <code>cyl</code>이 <code>3</code>, <code>5</code>, <code>rotary</code>가 되는 빈도가 높지 않다. <code>cars_93</code>에서 해당되는 자동차의 자료를 삭제하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="ot">&lt;-</span> cars_93 <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(<span class="sc">!</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"3"</span>, <span class="st">"5"</span>, <span class="st">"rotary"</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>8)&nbsp;<code>cars_93</code>에서 <code>hwy</code>의 값이 가장 큰 자동차의 자료를 출력하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">slice_max</span>(hwy)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        maker cyl trans hwy displ</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Honda Civic   <span class="dv">4</span>   Yes  <span class="dv">46</span>   <span class="fl">1.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>9)&nbsp; <code>cars_93</code>에서 변수 <code>cyl</code>로 구분되는 그룹별로 <code>hwy</code>의 값이 가장 큰 자동차의 자료를 출력하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cars_93 <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(cyl) <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">slice_max</span>(hwy)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 5 × 5</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Groups:   cyl [3]</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  maker               cyl   trans   hwy displ</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>fct<span class="sc">&gt;</span> <span class="er">&lt;</span>fct<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Honda Civic         <span class="dv">4</span>     Yes      <span class="dv">46</span>   <span class="fl">1.5</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Ford Taurus         <span class="dv">6</span>     No       <span class="dv">30</span>   <span class="dv">3</span>  </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Chevrolet Caprice   <span class="dv">8</span>     No       <span class="dv">26</span>   <span class="dv">5</span>  </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> Ford Crown_Victoria <span class="dv">8</span>     No       <span class="dv">26</span>   <span class="fl">4.6</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> Lincoln Town_Car    <span class="dv">8</span>     No       <span class="dv">26</span>   <span class="fl">4.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>7.</strong> 데이터 프레임 <code>airquality</code>는 뉴욕의 오존 농도에 관한 자료로서 6개 열, 153개 행으로 구성되어 있으다.</p>
+<p>1)&nbsp;변수 <code>Ozone</code>에는 많은 수의 결측값이 있다. 월별 겵측값의 수와 비율을 다음과 같이 출력하라.</p>
+<div class="cell">
+<pre><code># A tibble: 5 × 3
+  Month oz_na oz_na_prop
+  &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;
+1     5     5     0.161 
+2     6    21     0.7   
+3     7     5     0.161 
+4     8     5     0.161 
+5     9     1     0.0333</code></pre>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> airquality <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Month) <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarise</span>(<span class="at">oz_na =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">oz_na_prop =</span> oz_na <span class="sc">/</span> <span class="fu">n</span>())</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 5 × 3</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  Month oz_na oz_na_prop</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span>      <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>     <span class="dv">5</span>     <span class="dv">5</span>     <span class="fl">0.161</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>     <span class="dv">6</span>    <span class="dv">21</span>     <span class="fl">0.7</span>   </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>     <span class="dv">7</span>     <span class="dv">5</span>     <span class="fl">0.161</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>     <span class="dv">8</span>     <span class="dv">5</span>     <span class="fl">0.161</span> </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>     <span class="dv">9</span>     <span class="dv">1</span>     <span class="fl">0.0333</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>2)&nbsp;변수 <code>Solar.R</code>에도 많은 수의 결측값이 있다. 변수 <code>Ozone</code>과 <code>Solar.R</code> 중 적어도 한 변수가 결측값을 갖는 날수를 월별로 계산하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> airquality <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Month) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarise</span>(<span class="at">n_na =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(Ozone) <span class="sc">|</span> <span class="fu">is.na</span>(Solar.R)))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 5 × 2</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  Month  n_na</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>     <span class="dv">5</span>     <span class="dv">7</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>     <span class="dv">6</span>    <span class="dv">21</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>     <span class="dv">7</span>     <span class="dv">5</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>     <span class="dv">8</span>     <span class="dv">8</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>     <span class="dv">9</span>     <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>3)&nbsp; 변수 <code>Wind</code>의 값이 <code>mean(Wind)</code> 이상이고, 변수 <code>Temp</code>의 값이 <code>mean(Temp)</code> 미만이 되는 행을 선택해서, 데이터 프레임 <code>air_sub1</code>에 할당하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> air_sub1 <span class="ot">&lt;-</span> airquality <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Wind <span class="sc">&gt;=</span> <span class="fu">mean</span>(Wind) <span class="sc">&amp;</span> Temp <span class="sc">&lt;=</span> <span class="fu">mean</span>(Temp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>4)&nbsp; 변수 <code>Wind</code>의 값이 <code>mean(Wind)</code> 미만이고, 변수 <code>Temp</code>의 값이 <code>mean(Temp)</code> 이상이 되는 행을 선택해서, 데이터 프레임 <code>air_sub2</code>에 할당하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> air_sub2 <span class="ot">&lt;-</span> airquality <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(Wind <span class="sc">&lt;=</span> <span class="fu">mean</span>(Wind) <span class="sc">&amp;</span> Temp <span class="sc">&gt;=</span> <span class="fu">mean</span>(Temp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>5)&nbsp; <code>air_sub1</code>과 <code>air_sub2</code>의 변수 <code>Ozone</code>과 <code>Solar.R</code>의 평균값 및 중앙값을 계산해서 비교하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> air_sub1 <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarise</span>(<span class="at">m_oz =</span> <span class="fu">mean</span>(Ozone, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">med_oz =</span> <span class="fu">median</span>(Ozone, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">m_sol =</span> <span class="fu">mean</span>(Solar.R, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">med_sol =</span> <span class="fu">median</span>(Solar.R, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      m_oz med_oz  m_sol med_sol</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="fl">17.61765</span>     <span class="dv">16</span> <span class="fl">165.85</span>     <span class="dv">170</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> air_sub2 <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarise</span>(<span class="at">m_oz =</span> <span class="fu">mean</span>(Ozone, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">med_oz =</span> <span class="fu">median</span>(Ozone, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">m_sol =</span> <span class="fu">mean</span>(Solar.R, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">med_sol =</span> <span class="fu">median</span>(Solar.R, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      m_oz med_oz    m_sol med_sol</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="fl">71.36364</span>     <span class="dv">73</span> <span class="fl">204.0385</span>     <span class="dv">214</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>6)&nbsp; <code>air_sub1</code>과 <code>air_sub2</code>의 변수 <code>Ozone</code>과 <code>Solar.R</code>의 월별 평균값 및 해당 날짜 수를 계산해서 비교하라.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> air_sub1 <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Month) <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarise</span>(<span class="at">m_oz =</span> <span class="fu">mean</span>(Ozone, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">m_sol =</span> <span class="fu">mean</span>(Solar.R, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 5 × 4</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  Month  m_oz m_sol     n</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>     <span class="dv">5</span>  <span class="fl">19.1</span>  <span class="fl">181.</span>    <span class="dv">17</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>     <span class="dv">6</span>  <span class="fl">20.8</span>  <span class="fl">150.</span>     <span class="dv">7</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>     <span class="dv">7</span>  <span class="dv">10</span>    <span class="dv">264</span>      <span class="dv">1</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>     <span class="dv">8</span>  <span class="fl">17.3</span>  <span class="fl">155.</span>     <span class="dv">4</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>     <span class="dv">9</span>  <span class="fl">15.6</span>  <span class="fl">152.</span>    <span class="dv">13</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> air_sub2 <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">group_by</span>(Month) <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">summarise</span>(<span class="at">m_oz =</span> <span class="fu">mean</span>(Ozone, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">m_sol =</span> <span class="fu">mean</span>(Solar.R, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>             <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 5 × 4</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  Month  m_oz m_sol     n</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>     <span class="dv">5</span> <span class="dv">115</span>    <span class="dv">223</span>      <span class="dv">1</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>     <span class="dv">6</span>  <span class="dv">26</span>    <span class="dv">195</span>      <span class="dv">9</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>     <span class="dv">7</span>  <span class="fl">71.5</span>  <span class="dv">232</span>     <span class="dv">20</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>     <span class="dv">8</span>  <span class="fl">77.4</span>  <span class="fl">182.</span>    <span class="dv">18</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>     <span class="dv">9</span>  <span class="fl">63.9</span>  <span class="fl">181.</span>     <span class="dv">7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>8.</strong> 다음의 표는 세 명의 영업사원이 한 달간 판매한 세 가지 품목의 판매량 자료라고 한다.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-32f768c0{table-layout:auto;}.cl-32efb616{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-32efb62a{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-32f2de40{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-32f2de4a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-32f2de54{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-32f2de55{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-32f2de56{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-32f2fb6e{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb78{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb79{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb7a{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb82{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb83{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb8c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb8d{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb8e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb8f{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb96{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32f2fb97{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-32f768c0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-32f2fb6e"><p class="cl-32f2de40"><span class="cl-32efb616"></span></p></th><th colspan="3" class="cl-32f2fb78"><p class="cl-32f2de40"><span class="cl-32efb62a">Item</span></p></th></tr><tr style="overflow-wrap:break-word;"><th class="cl-32f2fb7a"><p class="cl-32f2de4a"><span class="cl-32efb62a">Name</span></p></th><th class="cl-32f2fb82"><p class="cl-32f2de54"><span class="cl-32efb616">A</span></p></th><th class="cl-32f2fb83"><p class="cl-32f2de54"><span class="cl-32efb616">B</span></p></th><th class="cl-32f2fb83"><p class="cl-32f2de54"><span class="cl-32efb616">C</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-32f2fb8c"><p class="cl-32f2de55"><span class="cl-32efb616">Park</span></p></td><td class="cl-32f2fb8d"><p class="cl-32f2de56"><span class="cl-32efb616">14</span></p></td><td class="cl-32f2fb8e"><p class="cl-32f2de56"><span class="cl-32efb616">12</span></p></td><td class="cl-32f2fb8e"><p class="cl-32f2de56"><span class="cl-32efb616">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-32f2fb8c"><p class="cl-32f2de55"><span class="cl-32efb616">Lee</span></p></td><td class="cl-32f2fb8d"><p class="cl-32f2de56"><span class="cl-32efb616">21</span></p></td><td class="cl-32f2fb8e"><p class="cl-32f2de56"><span class="cl-32efb616">16</span></p></td><td class="cl-32f2fb8e"><p class="cl-32f2de56"><span class="cl-32efb616">8</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-32f2fb8f"><p class="cl-32f2de55"><span class="cl-32efb616">Kim</span></p></td><td class="cl-32f2fb96"><p class="cl-32f2de56"><span class="cl-32efb616">15</span></p></td><td class="cl-32f2fb97"><p class="cl-32f2de56"><span class="cl-32efb616">5</span></p></td><td class="cl-32f2fb97"><p class="cl-32f2de56"><span class="cl-32efb616">10</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p>각 영업사원별 총 판매량을 구해서 다음과 같이 출력하라.</p>
+<div class="cell">
+<pre><code># A tibble: 3 × 5
+  name      A     B     C total
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Park     14    12     4    30
+2 Lee      21    16     8    45
+3 Kim      15     5    10    30</code></pre>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">tibble</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Park"</span>, <span class="st">"Lee"</span>, <span class="st">"Kim"</span>),</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                <span class="at">A =</span> <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">21</span>, <span class="dv">15</span>), <span class="at">B =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">5</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>                <span class="at">C =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">10</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">mutate</span>(<span class="at">total =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(A<span class="sc">:</span>C))) <span class="sc">|&gt;</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">ungroup</span>()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 3 × 5</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  name      A     B     C total</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> Park     <span class="dv">14</span>    <span class="dv">12</span>     <span class="dv">4</span>    <span class="dv">30</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Lee      <span class="dv">21</span>    <span class="dv">16</span>     <span class="dv">8</span>    <span class="dv">45</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Kim      <span class="dv">15</span>     <span class="dv">5</span>    <span class="dv">10</span>    <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div style="page-break-after: always;"></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-intro.html" class="pagination-link  aria-label=" &lt;span="" 시작하기&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -6,10 +6,12 @@ book:
   title: "R과 통계분석, 4판"
   subtitle: "Tidyverse 활용"
   author: "박동련"
+  cover-image: "Figure/cover.png"
   date: last-modified
   chapters:
     - index.qmd
     - 01-intro.qmd
+    - 02-dplyr.qmd
     
 format:
   html:

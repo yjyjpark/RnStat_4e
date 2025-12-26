@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="박동련">
-<meta name="dcterms.date" content="2025-04-07">
+<meta name="dcterms.date" content="2025-12-26">
 
 <title>R과 통계분석, 4판</title>
 <style>
@@ -153,6 +153,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">데이터 프레임 다루기</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -190,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 7, 2025</p>
+      <p class="date">December 26, 2025</p>
     </div>
   </div>
   
@@ -202,21 +208,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+
 <section id="머리말" class="level1 unnumbered">
-<h1 class="unnumbered">머리말</h1>
+<h1 class="unnumbered">머리말</h1><p><img src="Figure/cover.png" title="R과 통계분석, 4판" class="quarto-cover-image img-fluid"></p>
 <p>R은 통계분석과 그래프 작성 및 통계적 프로그래밍에 적합한 매우 효과적인 분석 도구입니다. R은 잠시도 정체되어 있지 않고 끊임없이 진화하고 있으며, 놀라운 발전 속도를 항상 보여주고 있는데, 특히 패키지 <code>tidyverse</code>의 출현은 매우 주목할 사항입니다. 그것은 R의 모습이 <code>tidyverse</code> 이전과 이후로 완전히 구분된다고 할 수 있기 때문입니다. 데이터 다루기와 그래프 성능이 비교할 수 없을 만큼 향상되었고, 복잡한 분석 과정이 대폭 단순화되어 매우 효율적인 분석이 가능해졌습니다. 이러한 발전으로 인하여 R은 이제 data science를 위한 최적의 프로그래밍 언어로 자리매김을 확고하게 했다고 할 수 있습니다.</p>
 <p>이 책은 “R과 통계분석”, 4판의 연습문제에 대한 도움을 드리고, 출간 후 수정이 필요한 내용이나, 새롭게 추가되는 내용 등을 올리기 위해 작성됩니다. 끊임없이 진화하고 있는 R의 변화를 반영하기 위해 지속적으로 보완해갈 예정입니다.</p>
 <p>끝으로 이 책을 작성할 때의 R 세션 정보는 다음과 같습니다.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sessionInfo</span>()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>R version <span class="dv">4</span>.<span class="fl">4.3</span> (<span class="dv">2025-02-28</span> ucrt)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>R version <span class="dv">4</span>.<span class="fl">5.2</span> (<span class="dv">2025-10-31</span> ucrt)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Platform<span class="sc">:</span> x86_64<span class="sc">-</span>w64<span class="sc">-</span>mingw32<span class="sc">/</span>x64</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Running under<span class="sc">:</span> Windows <span class="dv">11</span> <span class="fu">x64</span> (build <span class="dv">26100</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Running under<span class="sc">:</span> Windows <span class="dv">11</span> <span class="fu">x64</span> (build <span class="dv">26200</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Matrix products<span class="sc">:</span> default</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  LAPACK version <span class="dv">3</span>.<span class="fl">12.1</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>locale<span class="sc">:</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] LC_COLLATE<span class="ot">=</span>Korean_Korea.utf8  LC_CTYPE<span class="ot">=</span>Korean_Korea.utf8   </span>
@@ -230,21 +235,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] stats     graphics  grDevices utils     datasets  methods   base     </span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>other attached packages<span class="sc">:</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] lubridate_1.<span class="fl">9.4</span> forcats_1.<span class="fl">0.0</span>   stringr_1.<span class="fl">5.1</span>   dplyr_1.<span class="fl">1.4</span>    </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] purrr_1.<span class="fl">0.4</span>     readr_2.<span class="fl">1.5</span>     tidyr_1.<span class="fl">3.1</span>     tibble_3.<span class="fl">2.1</span>   </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] ggplot2_3.<span class="fl">5.1</span>   tidyverse_2.<span class="fl">0.0</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] lubridate_1.<span class="fl">9.4</span> forcats_1.<span class="fl">0.1</span>   stringr_1.<span class="fl">6.0</span>   dplyr_1.<span class="fl">1.4</span>    </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] purrr_1.<span class="fl">2.0</span>     readr_2.<span class="fl">1.6</span>     tidyr_1.<span class="fl">3.2</span>     tibble_3.<span class="fl">3.0</span>   </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] ggplot2_4.<span class="fl">0.1</span>   tidyverse_2.<span class="fl">0.0</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>loaded via a <span class="fu">namespace</span> (and not attached)<span class="sc">:</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] gtable_0.<span class="fl">3.6</span>      jsonlite_1.<span class="fl">9.1</span>    compiler_4.<span class="fl">4.3</span>    tidyselect_1.<span class="fl">2.1</span> </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] scales_1.<span class="fl">3.0</span>      yaml_2.<span class="fl">3.10</span>       fastmap_1.<span class="fl">2.0</span>     R6_2.<span class="fl">6.1</span>         </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] generics_0.<span class="fl">1.3</span>    knitr_1<span class="fl">.50</span>        htmlwidgets_1.<span class="fl">6.4</span> munsell_0.<span class="fl">5.1</span>    </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] pillar_1.<span class="fl">10.1</span>     tzdb_0.<span class="fl">5.0</span>        rlang_1.<span class="fl">1.5</span>       stringi_1.<span class="fl">8.4</span>    </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">17</span>] xfun_0<span class="fl">.51</span>         timechange_0.<span class="fl">3.0</span>  cli_3.<span class="fl">6.4</span>         withr_3.<span class="fl">0.2</span>      </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>[<span class="dv">21</span>] magrittr_2.<span class="fl">0.3</span>    digest_0.<span class="fl">6.37</span>     grid_4.<span class="fl">4.3</span>        rstudioapi_0.<span class="fl">17.1</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] hms_1.<span class="fl">1.3</span>         lifecycle_1.<span class="fl">0.4</span>   vctrs_0.<span class="fl">6.5</span>       evaluate_1.<span class="fl">0.3</span>   </span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>[<span class="dv">29</span>] glue_1.<span class="fl">8.0</span>        colorspace_2<span class="fl">.1</span><span class="dv">-1</span>  rmarkdown_2<span class="fl">.29</span>    tools_4.<span class="fl">4.3</span>      </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>[<span class="dv">33</span>] pkgconfig_2.<span class="fl">0.3</span>   htmltools_0.<span class="dv">5</span>.<span class="fl">8.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] gtable_0.<span class="fl">3.6</span>       jsonlite_2.<span class="fl">0.0</span>     compiler_4.<span class="fl">5.2</span>     tidyselect_1.<span class="fl">2.1</span>  </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] scales_1.<span class="fl">4.0</span>       yaml_2.<span class="fl">3.12</span>        fastmap_1.<span class="fl">2.0</span>      R6_2.<span class="fl">6.1</span>          </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] generics_0.<span class="fl">1.4</span>     knitr_1<span class="fl">.51</span>         htmlwidgets_1.<span class="fl">6.4</span>  pillar_1.<span class="fl">11.1</span>     </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] RColorBrewer_1<span class="fl">.1</span><span class="dv">-3</span> tzdb_0.<span class="fl">5.0</span>         rlang_1.<span class="fl">1.6</span>        stringi_1.<span class="fl">8.7</span>     </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">17</span>] xfun_0<span class="fl">.55</span>          S7_0.<span class="fl">2.1</span>           otel_0.<span class="fl">2.0</span>         timechange_0.<span class="fl">3.0</span>  </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>[<span class="dv">21</span>] cli_3.<span class="fl">6.5</span>          withr_3.<span class="fl">0.2</span>        magrittr_2.<span class="fl">0.4</span>     digest_0.<span class="fl">6.39</span>     </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] grid_4.<span class="fl">5.2</span>         rstudioapi_0.<span class="fl">17.1</span>  hms_1.<span class="fl">1.4</span>          lifecycle_1.<span class="fl">0.4</span>   </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>[<span class="dv">29</span>] vctrs_0.<span class="fl">6.5</span>        evaluate_1.<span class="fl">0.5</span>     glue_1.<span class="fl">8.0</span>         farver_2.<span class="fl">1.2</span>      </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>[<span class="dv">33</span>] rmarkdown_2<span class="fl">.30</span>     tools_4.<span class="fl">5.2</span>        pkgconfig_2.<span class="fl">0.3</span>    htmltools_0.<span class="fl">5.9</span>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
