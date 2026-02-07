@@ -10,8 +10,9 @@ book:
   date: last-modified
   chapters:
     - index.qmd
-    - 01-intro.qmd
-    - 02-dplyr.qmd
+    - 01-intro-4e.qmd
+    - 02-dplyr-4e.qmd
+    - 03-ggplot2-4e.qmd
     
 format:
   html:
@@ -42,3 +43,5 @@ crossref:
   tbl-title: "표 "
   tbl-prefix: ""
   sec-prefix: ""
+
+# quarto render

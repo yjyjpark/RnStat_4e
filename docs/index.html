@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="박동련">
-<meta name="dcterms.date" content="2025-12-26">
+<meta name="dcterms.date" content="2026-02-07">
 
 <title>R과 통계분석, 4판</title>
 <style>
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-intro.html" rel="next">
+<link href="./01-intro-4e.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -149,14 +149,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./01-intro-4e.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-dplyr.html" class="sidebar-item-text sidebar-link">
+  <a href="./02-dplyr-4e.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">데이터 프레임 다루기</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-ggplot2-4e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">자료 시각화</span></span></a>
   </div>
 </li>
     </ul>
@@ -196,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 26, 2025</p>
+      <p class="date">February 7, 2026</p>
     </div>
   </div>
   
@@ -235,19 +241,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] stats     graphics  grDevices utils     datasets  methods   base     </span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>other attached packages<span class="sc">:</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] lubridate_1.<span class="fl">9.4</span> forcats_1.<span class="fl">0.1</span>   stringr_1.<span class="fl">6.0</span>   dplyr_1.<span class="fl">1.4</span>    </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] purrr_1.<span class="fl">2.0</span>     readr_2.<span class="fl">1.6</span>     tidyr_1.<span class="fl">3.2</span>     tibble_3.<span class="fl">3.0</span>   </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] ggplot2_4.<span class="fl">0.1</span>   tidyverse_2.<span class="fl">0.0</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] lubridate_1.<span class="fl">9.4</span> forcats_1.<span class="fl">0.1</span>   stringr_1.<span class="fl">6.0</span>   dplyr_1.<span class="fl">2.0</span>    </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] purrr_1.<span class="fl">2.1</span>     readr_2.<span class="fl">1.6</span>     tidyr_1.<span class="fl">3.2</span>     tibble_3.<span class="fl">3.1</span>   </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] ggplot2_4.<span class="fl">0.2</span>   tidyverse_2.<span class="fl">0.0</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>loaded via a <span class="fu">namespace</span> (and not attached)<span class="sc">:</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] gtable_0.<span class="fl">3.6</span>       jsonlite_2.<span class="fl">0.0</span>     compiler_4.<span class="fl">5.2</span>     tidyselect_1.<span class="fl">2.1</span>  </span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] scales_1.<span class="fl">4.0</span>       yaml_2.<span class="fl">3.12</span>        fastmap_1.<span class="fl">2.0</span>      R6_2.<span class="fl">6.1</span>          </span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] generics_0.<span class="fl">1.4</span>     knitr_1<span class="fl">.51</span>         htmlwidgets_1.<span class="fl">6.4</span>  pillar_1.<span class="fl">11.1</span>     </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] RColorBrewer_1<span class="fl">.1</span><span class="dv">-3</span> tzdb_0.<span class="fl">5.0</span>         rlang_1.<span class="fl">1.6</span>        stringi_1.<span class="fl">8.7</span>     </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">17</span>] xfun_0<span class="fl">.55</span>          S7_0.<span class="fl">2.1</span>           otel_0.<span class="fl">2.0</span>         timechange_0.<span class="fl">3.0</span>  </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] RColorBrewer_1<span class="fl">.1</span><span class="dv">-3</span> tzdb_0.<span class="fl">5.0</span>         rlang_1.<span class="fl">1.7</span>        stringi_1.<span class="fl">8.7</span>     </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">17</span>] xfun_0<span class="fl">.56</span>          S7_0.<span class="fl">2.1</span>           otel_0.<span class="fl">2.0</span>         timechange_0.<span class="fl">4.0</span>  </span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>[<span class="dv">21</span>] cli_3.<span class="fl">6.5</span>          withr_3.<span class="fl">0.2</span>        magrittr_2.<span class="fl">0.4</span>     digest_0.<span class="fl">6.39</span>     </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] grid_4.<span class="fl">5.2</span>         rstudioapi_0.<span class="fl">17.1</span>  hms_1.<span class="fl">1.4</span>          lifecycle_1.<span class="fl">0.4</span>   </span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>[<span class="dv">29</span>] vctrs_0.<span class="fl">6.5</span>        evaluate_1.<span class="fl">0.5</span>     glue_1.<span class="fl">8.0</span>         farver_2.<span class="fl">1.2</span>      </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] grid_4.<span class="fl">5.2</span>         rstudioapi_0.<span class="fl">18.0</span>  hms_1.<span class="fl">1.4</span>          lifecycle_1.<span class="fl">0.5</span>   </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>[<span class="dv">29</span>] vctrs_0.<span class="fl">7.1</span>        evaluate_1.<span class="fl">0.5</span>     glue_1.<span class="fl">8.0</span>         farver_2.<span class="fl">1.2</span>      </span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>[<span class="dv">33</span>] rmarkdown_2<span class="fl">.30</span>     tools_4.<span class="fl">5.2</span>        pkgconfig_2.<span class="fl">0.3</span>    htmltools_0.<span class="fl">5.9</span>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
@@ -646,7 +652,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-intro.html" class="pagination-link" aria-label="<span class='chapter-number'>1</span>&nbsp; <span class='chapter-title'>R 시작하기</span>">
+      <a href="./01-intro-4e.html" class="pagination-link" aria-label="<span class='chapter-number'>1</span>&nbsp; <span class='chapter-title'>R 시작하기</span>">
         <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 시작하기</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
